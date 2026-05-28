@@ -1,0 +1,35 @@
+---
+import Badge from "../ui/Badge.astro";
+
+const techs = [
+  { name: "Python", variant: "cyan" },
+  { name: "PyTorch", variant: "purple" },
+  { name: "TensorFlow", variant: "purple" },
+  { name: "ROS", variant: "cyan" },
+  { name: "Go", variant: "cyan" },
+  { name: "Rust", variant: "purple" },
+  { name: "React", variant: "cyan" },
+  { name: "TypeScript", variant: "purple" },
+  { name: "Node.js", variant: "cyan" },
+  { name: "PostgreSQL", variant: "default" },
+  { name: "Docker", variant: "default" },
+  { name: "Kubernetes", variant: "default" },
+  { name: "AWS", variant: "default" },
+  { name: "Linux", variant: "default" },
+  { name: "Git", variant: "default" },
+];
+---
+
+<section class="py-24">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <h2 class="text-3xl sm:text-4xl font-bold text-white text-center mb-4">技术栈</h2>
+    <p class="text-gray-500 text-center mb-12 max-w-xl mx-auto">
+      我们使用的核心技术
+    </p>
+    <div class="flex flex-wrap justify-center gap-3">
+      {techs.map((t) => (
+        <Badge variant={t.variant} class="text-sm px-4 py-2">{t.name}</Badge>
+      ))}
+    </div>
+  </div>
+</section>

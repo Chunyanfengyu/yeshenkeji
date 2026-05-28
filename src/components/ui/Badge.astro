@@ -1,0 +1,18 @@
+---
+export interface Props {
+  variant?: "default" | "purple" | "cyan";
+  class?: string;
+}
+
+const { variant = "default" } = Astro.props;
+
+const variants = {
+  default: "bg-white/10 text-gray-300 border-white/10",
+  purple: "bg-neon-purple/10 text-neon-purple border-neon-purple/20",
+  cyan: "bg-neon-cyan/10 text-neon-cyan border-neon-cyan/20",
+};
+---
+
+<span class={`inline-flex items-center px-3 py-1 text-xs font-mono font-medium rounded-full border ${variants[variant]} ${Astro.props.class || ""}`}>
+  <slot />
+</span>

@@ -1,0 +1,73 @@
+---
+import Button from "../ui/Button.astro";
+
+const navLinks = [
+  { href: "/", label: "首页" },
+  { href: "/about", label: "关于" },
+  { href: "/solutions", label: "解决方案" },
+  { href: "/cases", label: "案例" },
+  { href: "/blog", label: "博客" },
+  { href: "/contact", label: "联系" },
+];
+---
+
+<nav class="fixed top-0 left-0 right-0 z-50 glass">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="flex items-center justify-between h-16">
+      <a href="/" class="flex items-center gap-2">
+        <span class="text-xl font-bold gradient-text font-sans">夜深科技</span>
+        <span class="text-xs text-gray-500 font-mono hidden sm:inline">Yeshen Tech</span>
+      </a>
+
+      <div class="hidden md:flex items-center gap-6">
+        {
+          navLinks.map((link) => (
+            <a
+              href={link.href}
+              class="text-sm text-gray-400 hover:text-white transition-colors font-medium"
+            >
+              {link.label}
+            </a>
+          ))
+        }
+        <Button variant="primary" size="sm" href="/contact">开启合作</Button>
+      </div>
+
+      <button
+        id="menu-toggle"
+        class="md:hidden text-gray-300 hover:text-white p-2"
+        aria-label="打开菜单"
+      >
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+        </svg>
+      </button>
+    </div>
+  </div>
+
+  <div id="mobile-menu" class="hidden md:hidden glass border-t border-white/10">
+    <div class="px-4 py-4 space-y-3">
+      {
+        navLinks.map((link) => (
+          <a
+            href={link.href}
+            class="block text-sm text-gray-400 hover:text-white transition-colors py-2"
+          >
+            {link.label}
+          </a>
+        ))
+      }
+      <Button variant="primary" size="sm" href="/contact" class="w-full">开启合作</Button>
+    </div>
+  </div>
+</nav>
+
+<script>
+  const toggle = document.getElementById("menu-toggle");
+  const menu = document.getElementById("mobile-menu");
+  if (toggle && menu) {
+    toggle.addEventListener("click", () => {
+      menu.classList.toggle("hidden");
+    });
+  }
+</script>

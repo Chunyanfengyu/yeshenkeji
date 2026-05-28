@@ -1,0 +1,131 @@
+---
+import Button from "../ui/Button.astro";
+---
+
+<section class="relative min-h-screen flex items-center overflow-hidden">
+  <canvas id="particles-canvas" class="absolute inset-0 z-0"></canvas>
+
+  <div class="absolute inset-0 bg-gradient-to-b from-midnight/80 via-transparent to-midnight z-[1]"></div>
+
+  <div class="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-32 w-full">
+    <div class="max-w-3xl">
+      <h1 class="text-5xl sm:text-6xl lg:text-8xl font-black text-white leading-tight mb-4">
+        夜深科技
+      </h1>
+      <p class="text-xl sm:text-2xl lg:text-3xl text-gray-400 font-mono mb-2">
+        Night Deep Tech
+      </p>
+      <p class="text-base sm:text-lg text-gray-500 max-w-xl mb-8 leading-relaxed">
+        在静谧的深夜，用代码构建智能的未来。
+        深耕 AI、机器人技术与数字创意。
+      </p>
+      <div class="flex flex-wrap gap-4">
+        <Button variant="primary" size="lg" href="/contact">开启合作</Button>
+        <Button variant="outline" size="lg" href="/solutions">探索方案</Button>
+      </div>
+    </div>
+  </div>
+
+  <div class="absolute bottom-8 left-1/2 -translate-x-1/2 z-10 animate-bounce">
+    <svg class="w-6 h-6 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3" />
+    </svg>
+  </div>
+</section>
+
+<script is:inline>
+  (function() {
+    var canvas = document.getElementById("particles-canvas");
+    if (!canvas) return;
+    var ctx = canvas.getContext("2d");
+    var particles = [];
+    var mouse = { x: null, y: null, radius: 180 };
+
+    function resize() {
+      var rect = canvas.parentElement.getBoundingClientRect();
+      canvas.width = rect.width;
+      canvas.height = rect.height;
+    }
+    resize();
+    window.addEventListener("resize", resize);
+
+    canvas.addEventListener("mousemove", function(e) {
+      var rect = canvas.getBoundingClientRect();
+      mouse.x = e.clientX - rect.left;
+      mouse.y = e.clientY - rect.top;
+    });
+    canvas.addEventListener("mouseleave", function() {
+      mouse.x = null;
+      mouse.y = null;
+    });
+
+    var colors = ["#6366f1", "#06b6d4"];
+    var count = 60;
+
+    for (var i = 0; i < count; i++) {
+      particles.push({
+        x: Math.random() * canvas.width,
+        y: Math.random() * canvas.height,
+        vx: (Math.random() - 0.5) * 0.8,
+        vy: (Math.random() - 0.5) * 0.8,
+        size: Math.random() * 2.5 + 0.5,
+        color: colors[Math.floor(Math.random() * colors.length)],
+        opacity: Math.random() * 0.3 + 0.1,
+      });
+    }
+
+    function animate() {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+      for (var i = 0; i < particles.length; i++) {
+        var p = particles[i];
+        p.x += p.vx;
+        p.y += p.vy;
+
+        if (p.x < 0 || p.x > canvas.width) p.vx *= -1;
+        if (p.y < 0 || p.y > canvas.height) p.vy *= -1;
+
+        ctx.beginPath();
+        ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
+        ctx.fillStyle = p.color;
+        ctx.globalAlpha = p.opacity;
+        ctx.fill();
+
+        for (var j = i + 1; j < particles.length; j++) {
+          var q = particles[j];
+          var dx = p.x - q.x;
+          var dy = p.y - q.y;
+          var dist = Math.sqrt(dx * dx + dy * dy);
+          if (dist < 150) {
+            ctx.beginPath();
+            ctx.moveTo(p.x, p.y);
+            ctx.lineTo(q.x, q.y);
+            ctx.strokeStyle = "#6366f1";
+            ctx.globalAlpha = (1 - dist / 150) * 0.15;
+            ctx.lineWidth = 0.8;
+            ctx.stroke();
+          }
+        }
+
+        if (mouse.x !== null) {
+          var dx = p.x - mouse.x;
+          var dy = p.y - mouse.y;
+          var dist = Math.sqrt(dx * dx + dy * dy);
+          if (dist < mouse.radius) {
+            ctx.beginPath();
+            ctx.moveTo(p.x, p.y);
+            ctx.lineTo(mouse.x, mouse.y);
+            ctx.strokeStyle = "#6366f1";
+            ctx.globalAlpha = (1 - dist / mouse.radius) * 0.25;
+            ctx.lineWidth = 1;
+            ctx.stroke();
+          }
+        }
+
+        ctx.globalAlpha = 1;
+      }
+      requestAnimationFrame(animate);
+    }
+    animate();
+  })();
+</script>

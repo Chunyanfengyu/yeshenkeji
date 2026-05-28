@@ -1,0 +1,38 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import Card from "../components/ui/Card.astro";
+
+const cases = [
+  {
+    title: "智能客服系统",
+    description: "基于大语言模型的 7×24 小时智能客服系统，日处理对话量超 10 万条。",
+    icon: "💬",
+  },
+  {
+    title: "仓储机器人调度平台",
+    description: "多机器人协同调度系统，实现仓库自动化效率提升 300%。",
+    icon: "📦",
+  },
+  {
+    title: "数字艺术交互装置",
+    description: "为某艺术展打造的实时粒子交互装置，参观者可通过手势控制画面。",
+    icon: "🎯",
+  },
+];
+---
+
+<BaseLayout title="案例">
+  <section class="min-h-screen pt-24 pb-16">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
+      <h1 class="text-4xl sm:text-5xl font-bold text-white mb-4">案例</h1>
+      <p class="text-gray-500 mb-12 max-w-2xl">
+        以下为部分代表性案例，更多详情请与我们联系。
+      </p>
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+        {cases.map((c) => (
+          <Card icon={c.icon} title={c.title} description={c.description} />
+        ))}
+      </div>
+    </div>
+  </section>
+</BaseLayout>
