@@ -7,24 +7,33 @@ const features = [
     title: "AI 软件开发",
     description: "基于大模型与深度学习的智能系统开发，从 NLP 到计算机视觉，提供企业级 AI 解决方案。",
     href: "/solutions/ai-software",
+    tags: ["Python", "PyTorch", "LLM"],
+    stats: [
+      { label: "项目组", value: "1" },
+      { label: "技术栈", value: "6+" },
+    ],
   },
-  {
-    icon: "⚙️",
-    title: "机器人技术",
-    description: "ROS 驱动的机器人系统集成、自主导航与机械臂控制，助力工业与服务业智能化升级。",
-    href: "/solutions/robotics",
-  },
-  {
+{
     icon: "🎨",
     title: "数字创意",
     description: "沉浸式交互体验、实时渲染与数字孪生，用技术赋能创意表达。",
     href: "/solutions/digital-creative",
+    tags: ["WebGL", "Unity", "3D"],
+    stats: [
+      { label: "项目组", value: "1" },
+      { label: "技术栈", value: "4+" },
+    ],
   },
   {
     icon: "🔬",
     title: "技术咨询",
     description: "为初创企业与传统企业提供技术架构评估、AI 落地路径规划与团队培训服务。",
     href: "/contact",
+    tags: ["架构", "AI转型", "培训"],
+    stats: [
+      { label: "服务能力", value: "全栈" },
+      { label: "响应", value: "24h" },
+    ],
   },
 ];
 ---
@@ -37,7 +46,14 @@ const features = [
     </p>
     <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
       {features.map((f) => (
-        <Card title={f.title} description={f.description} icon={f.icon} href={f.href} />
+        <Card
+          title={f.title}
+          description={f.description}
+          icon={f.icon}
+          href={f.href}
+          tags={f.tags}
+          stats={f.stats}
+        />
       ))}
     </div>
   </div>

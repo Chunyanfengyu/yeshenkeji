@@ -1,7 +1,7 @@
 {
   "name": "yeshen-tech",
   "version": "1.0.0",
-  "description": "河北省夜深科技有限责任公司 - 企业官网",
+  "description": "河北省夜深科技有限责任公司 (Noctis Tech) - 企业官网",
   "type": "module",
   "scripts": {
     "dev": "astro dev",
