@@ -1,0 +1,129 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+
+const plan = {
+  id: "monogatari",
+  name: "物语 AI 角色聊天",
+  price: "9.9",
+  period: "/月",
+  features: [
+    "不限次数 AI 对话",
+    "自定义角色上传、修改",
+  ],
+};
+---
+
+<BaseLayout title="物语 · 付费">
+  <section class="min-h-screen pt-24 pb-16">
+    <div class="max-w-2xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="text-center mb-16">
+        <h1 class="text-4xl sm:text-5xl font-bold text-white mb-4">
+          物语 <span class="gradient-text">付费开通</span>
+        </h1>
+        <p class="text-gray-400">
+          AI 角色聊天平台 · 微信支付 · ¥{plan.price}{plan.period}
+        </p>
+      </div>
+
+      <div class="glass rounded-2xl p-8 mb-8">
+        <div class="text-center mb-8">
+          <h2 class="text-2xl font-bold text-white mb-2">{plan.name}</h2>
+          <div class="flex items-baseline justify-center gap-1 mt-3">
+            <span class="text-5xl font-bold text-white">¥{plan.price}</span>
+            <span class="text-gray-500">{plan.period}</span>
+          </div>
+        </div>
+
+        <ul class="space-y-3 mb-8">
+          {plan.features.map((f) => (
+            <li class="flex items-start gap-2 text-sm text-gray-400">
+              <span class="text-neon-cyan shrink-0 mt-0.5">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>
+                </svg>
+              </span>
+              {f}
+            </li>
+          ))}
+        </ul>
+
+        <div class="space-y-4">
+          <div>
+            <label for="user-id-input" class="block text-sm text-gray-400 mb-2">用户编号</label>
+            <input
+              id="user-id-input"
+              type="text"
+              placeholder="请输入你的用户编号作为支付备注"
+              class="w-full bg-white/5 border border-white/10 rounded-lg px-4 py-3 text-white text-sm placeholder-gray-600 focus:outline-none focus:border-neon-purple/50 transition-colors"
+            />
+          </div>
+
+          <button
+            id="pay-btn"
+            class="w-full py-3 px-4 rounded-lg text-sm font-medium bg-neon-purple text-white hover:bg-neon-purple/90 shadow-lg shadow-neon-purple/25 transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed"
+          >
+            立即支付 ¥{plan.price}
+          </button>
+        </div>
+      </div>
+
+      <div class="text-center text-gray-600 text-xs">
+        支付后请联系客服开通：chunfeng@yeshen.tech
+      </div>
+    </div>
+
+    <div id="pay-modal" class="hidden fixed inset-0 z-[100] flex items-center justify-center bg-black/70 backdrop-blur-sm" onclick="closePayModal(event)">
+      <div class="glass rounded-2xl p-8 max-w-md w-full mx-4 text-center" onclick="event.stopPropagation()">
+        <h3 class="text-xl font-bold text-white mb-2">扫码支付</h3>
+        <p class="text-gray-400 text-sm mb-2">请使用<strong class="text-white">微信</strong>扫描下方二维码</p>
+        <p class="text-neon-cyan text-2xl font-bold mb-6" id="modal-amount">¥9.9</p>
+
+        <div class="mb-4">
+          <img src="/images/pay-qr.png" alt="微信收款码" class="w-56 h-56 mx-auto rounded-xl border border-white/10"/>
+        </div>
+
+        <div class="text-gray-500 text-xs mb-6 space-y-2">
+          <p>支付 <strong class="text-white">¥9.9</strong></p>
+          <p class="text-neon-purple font-bold">付款时务必在<strong class="text-white">备注</strong>填写:</p>
+          <p class="text-white font-mono text-lg" id="modal-user-id"></p>
+          <p>支付成功后截图联系客服开通</p>
+          <p>邮箱：chunfeng@yeshen.tech</p>
+        </div>
+
+        <button class="text-sm text-gray-500 hover:text-white transition-colors" onclick="document.getElementById('pay-modal')!.classList.add('hidden')">
+          关闭
+        </button>
+      </div>
+    </div>
+
+    <div id="error-toast" class="hidden fixed bottom-6 left-1/2 -translate-x-1/2 z-[200] bg-red-500/90 text-white text-sm px-6 py-3 rounded-lg shadow-lg">
+      请输入用户编号
+    </div>
+  </section>
+</BaseLayout>
+
+<script is:inline>
+  function showToast(msg) {
+    const toast = document.getElementById("error-toast");
+    toast.textContent = msg;
+    toast.classList.remove("hidden");
+    setTimeout(() => toast.classList.add("hidden"), 2000);
+  }
+
+  document.getElementById("pay-btn").addEventListener("click", () => {
+    const userId = document.getElementById("user-id-input").value.trim();
+    if (!userId) {
+      showToast("请先输入用户编号");
+      return;
+    }
+
+    document.getElementById("modal-user-id").textContent = userId;
+    document.getElementById("pay-modal").classList.remove("hidden");
+  });
+
+  function closePayModal(event) {
+    if (event.target === event.currentTarget || event.target.id === "pay-modal") {
+      document.getElementById("pay-modal").classList.add("hidden");
+    }
+  }
+</script>

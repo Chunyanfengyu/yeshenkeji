@@ -4,11 +4,37 @@ import Hero from "../components/sections/Hero.astro";
 import Features from "../components/sections/Features.astro";
 import TechStack from "../components/sections/TechStack.astro";
 import Partners from "../components/sections/Partners.astro";
+import Button from "../components/ui/Button.astro";
 ---
 
 <BaseLayout title="首页">
   <Hero />
   <Features />
   <TechStack />
+
+  <section class="py-20">
+    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="glass rounded-2xl p-8 sm:p-12 text-center border border-neon-purple/20">
+        <div class="text-neon-purple text-sm font-mono mb-3">// 产品推荐</div>
+        <h2 class="text-3xl sm:text-4xl font-bold text-white mb-4">
+          物语 <span class="gradient-text">AI 角色聊天平台</span>
+        </h2>
+        <p class="text-gray-400 max-w-xl mx-auto mb-8">
+          基于大模型的 AI 角色扮演对话系统，支持微信机器人接入、长期记忆、主动对话等核心能力。即开即用，扫码支付。
+        </p>
+
+        <div class="flex items-baseline justify-center gap-2 mb-8">
+          <span class="text-5xl font-bold text-white">¥9.9</span>
+          <span class="text-gray-500 text-lg">/月</span>
+        </div>
+
+        <div class="flex flex-col sm:flex-row items-center justify-center gap-4">
+          <Button variant="primary" size="lg" href="/payment">立即开通物语</Button>
+          <Button variant="outline" size="lg" href="/cases">查看案例详情</Button>
+        </div>
+      </div>
+    </div>
+  </section>
+
   <Partners />
 </BaseLayout>

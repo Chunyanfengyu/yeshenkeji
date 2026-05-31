@@ -1,6 +1,7 @@
 ---
 import BaseLayout from "../layouts/BaseLayout.astro";
 import Badge from "../components/ui/Badge.astro";
+import Button from "../components/ui/Button.astro";
 ---
 
 <BaseLayout title="案例">
@@ -177,6 +178,12 @@ import Badge from "../components/ui/Badge.astro";
               <div class="text-gray-500 text-xs mt-1">微信 ↔ 本地大模型消息路由</div>
             </div>
           </div>
+        </div>
+
+        <div class="mt-8 p-6 glass rounded-xl border border-neon-purple/30 text-center">
+          <p class="text-white text-lg font-semibold mb-2">开始使用物语</p>
+          <p class="text-gray-400 text-sm mb-4">选择适合你的方案，30 个 AI 角色等你来创建</p>
+          <Button variant="primary" size="lg" href="/payment">查看定价方案</Button>
         </div>
       </article>
     </div>
