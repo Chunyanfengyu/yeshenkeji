@@ -2,53 +2,206 @@
 import Button from "../ui/Button.astro";
 ---
 
-<section class="py-24 bg-deepgray/50">
-  <div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
-    <h2 class="text-3xl sm:text-4xl font-bold text-white text-center mb-4">联系我们</h2>
-    <p class="text-gray-500 text-center mb-12 max-w-xl mx-auto">
-      告诉我们您的需求，我们将在 24 小时内回复
-    </p>
-
-    <form id="contact-form" class="glass rounded-xl p-6 sm:p-8 space-y-6" data-netlify="true" name="contact">
-      <input type="hidden" name="form-name" value="contact" />
-
-      <div>
-        <label for="name" class="block text-sm font-medium text-gray-300 mb-2">姓名</label>
-        <input
-          type="text"
-          id="name"
-          name="name"
-          required
-          placeholder="您的姓名"
-          class="w-full bg-white/5 border border-white/10 rounded-lg px-4 py-3 text-white placeholder-gray-600 focus:outline-none focus:border-neon-purple/50 focus:ring-1 focus:ring-neon-purple/30 transition-colors"
-        />
-      </div>
-
-      <div>
-        <label for="email" class="block text-sm font-medium text-gray-300 mb-2">邮箱</label>
-        <input
-          type="email"
-          id="email"
-          name="email"
-          required
-          placeholder="your@email.com"
-          class="w-full bg-white/5 border border-white/10 rounded-lg px-4 py-3 text-white placeholder-gray-600 focus:outline-none focus:border-neon-purple/50 focus:ring-1 focus:ring-neon-purple/30 transition-colors"
-        />
-      </div>
-
-      <div>
-        <label for="message" class="block text-sm font-medium text-gray-300 mb-2">需求描述</label>
-        <textarea
-          id="message"
-          name="message"
-          required
-          rows="5"
-          placeholder="请描述您的项目需求..."
-          class="w-full bg-white/5 border border-white/10 rounded-lg px-4 py-3 text-white placeholder-gray-600 focus:outline-none focus:border-neon-purple/50 focus:ring-1 focus:ring-neon-purple/30 transition-colors resize-none"
-        ></textarea>
-      </div>
-
-      <Button variant="primary" size="lg" type="submit" class="w-full">发送消息</Button>
-    </form>
+<form id="contact-form" class="space-y-6">
+  <!-- 蜜罐字段：人看不到，机器人会填 -->
+  <div style="position:absolute;left:-9999px" aria-hidden="true">
+    <input type="text" name="company" tabindex="-1" autocomplete="off" />
   </div>
-</section>
+
+  <div>
+    <label for="name" class="block font-mono text-xs text-gray-500 mb-2">name</label>
+    <input
+      type="text"
+      id="name"
+      name="name"
+      required
+      maxlength="50"
+      placeholder="你的姓名"
+      class="w-full bg-deepgray border border-white/10 px-4 py-3 text-white placeholder-gray-600 font-mono text-sm focus:outline-none focus:border-neon-purple/50 transition-colors"
+    />
+    <p id="name-error" class="hidden text-red-400 text-xs font-mono mt-1"></p>
+  </div>
+
+  <div>
+    <label for="email" class="block font-mono text-xs text-gray-500 mb-2">email</label>
+    <input
+      type="email"
+      id="email"
+      name="email"
+      required
+      maxlength="100"
+      placeholder="your@email.com"
+      class="w-full bg-deepgray border border-white/10 px-4 py-3 text-white placeholder-gray-600 font-mono text-sm focus:outline-none focus:border-neon-purple/50 transition-colors"
+    />
+    <p id="email-error" class="hidden text-red-400 text-xs font-mono mt-1"></p>
+  </div>
+
+  <div>
+    <label for="message" class="block font-mono text-xs text-gray-500 mb-2">message</label>
+    <textarea
+      id="message"
+      name="message"
+      required
+      rows="5"
+      maxlength="2000"
+      placeholder="请描述你的项目需求..."
+      class="w-full bg-deepgray border border-white/10 px-4 py-3 text-white placeholder-gray-600 font-mono text-sm focus:outline-none focus:border-neon-purple/50 transition-colors resize-none"
+    ></textarea>
+    <p id="message-error" class="hidden text-red-400 text-xs font-mono mt-1"></p>
+  </div>
+
+  <Button variant="primary" size="lg" type="submit" class="w-full">发送消息</Button>
+</form>
+
+<div id="success-toast" class="hidden fixed bottom-6 left-1/2 -translate-x-1/2 z-[200] bg-neon-purple text-white text-sm px-6 py-3 font-mono">
+  提交成功，我们将会在 24 小时内联系您
+</div>
+
+<script is:inline>
+(function() {
+  var form = document.getElementById("contact-form");
+  var loadTime = Date.now();
+
+  // 输入清理：移除 HTML 标签和危险字符
+  function sanitize(str) {
+    return str.replace(/<[^>]*>/g, "").replace(/[<>"'`;\\]/g, "").trim();
+  }
+
+  // 邮箱格式校验
+  function isValidEmail(email) {
+    return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+  }
+
+  // 检测恶意内容
+  function isMalicious(text) {
+    var lower = text.toLowerCase();
+    // 常见垃圾信息关键词
+    var spamKeywords = ["casino", "viagra", "crypto", "bitcoin", "lottery", "prize", "click here", "免费领取", "中奖", "刷单", "兼职"];
+    for (var i = 0; i < spamKeywords.length; i++) {
+      if (lower.indexOf(spamKeywords[i]) !== -1) return true;
+    }
+    // 检测过多链接
+    var urlCount = (text.match(/https?:\/\//g) || []).length;
+    if (urlCount >= 3) return true;
+    // 检测重复字符（如 aaaabbbbbbbb）
+    if (/(.)\1{7,}/.test(text)) return true;
+    return false;
+  }
+
+  // 显示错误
+  function showError(fieldId, msg) {
+    var el = document.getElementById(fieldId + "-error");
+    if (el) { el.textContent = msg; el.classList.remove("hidden"); }
+  }
+
+  // 清除错误
+  function clearErrors() {
+    document.querySelectorAll("[id$=-error]").forEach(function(el) {
+      el.classList.add("hidden");
+      el.textContent = "";
+    });
+  }
+
+  // 频率限制：3 秒内不能重复提交
+  var lastSubmit = parseInt(localStorage.getItem("contact_last_submit") || "0");
+
+  form.addEventListener("submit", function(e) {
+    e.preventDefault();
+    clearErrors();
+
+    // 1. 蜜罐检测
+    if (form.company.value !== "") {
+      console.warn("[Anti-spam] honeypot triggered");
+      form.reset();
+      showSuccess();
+      return;
+    }
+
+    // 2. 时间检测：提交太快 = 机器人
+    var elapsed = Date.now() - loadTime;
+    if (elapsed < 3000) {
+      showError("message", "操作太快了，请稍后再试");
+      return;
+    }
+
+    // 3. 频率限制：60 秒内不能重复提交
+    var now = Date.now();
+    if (now - lastSubmit < 60000) {
+      var wait = Math.ceil((60000 - (now - lastSubmit)) / 1000);
+      showError("message", "提交太频繁，请 " + wait + " 秒后重试");
+      return;
+    }
+
+    // 4. 输入校验
+    var name = sanitize(form.name.value);
+    var email = form.email.value.trim();
+    var message = sanitize(form.message.value);
+
+    var valid = true;
+
+    if (name.length < 2) {
+      showError("name", "姓名至少 2 个字符");
+      valid = false;
+    }
+
+    if (!isValidEmail(email)) {
+      showError("email", "请输入有效的邮箱地址");
+      valid = false;
+    }
+
+    if (message.length < 10) {
+      showError("message", "留言至少 10 个字符");
+      valid = false;
+    }
+
+    if (message.length > 2000) {
+      showError("message", "留言不能超过 2000 个字符");
+      valid = false;
+    }
+
+    // 5. 恶意内容检测
+    if (isMalicious(name) || isMalicious(message)) {
+      showError("message", "内容包含不允许的信息");
+      return;
+    }
+
+    if (!valid) return;
+
+    // 提交
+    var data = {
+      access_key: "09be2886-6653-4d51-8581-c31600a0f39f",
+      name: name,
+      email: email,
+      message: message,
+      subject: "夜深科技 - 新的联系表单提交",
+      from_name: "夜深科技官网",
+    };
+
+    fetch("https://api.web3forms.com/submit", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(data),
+    })
+    .then(function(resp) { return resp.json(); })
+    .then(function(result) {
+      if (result.success) {
+        localStorage.setItem("contact_last_submit", String(Date.now()));
+        form.reset();
+        loadTime = Date.now();
+        showSuccess();
+      } else {
+        alert("提交失败: " + (result.message || "请稍后重试"));
+      }
+    })
+    .catch(function() {
+      alert("提交失败，请检查网络后重试");
+    });
+  });
+
+  function showSuccess() {
+    var toast = document.getElementById("success-toast");
+    toast.classList.remove("hidden");
+    setTimeout(function() { toast.classList.add("hidden"); }, 3000);
+  }
+})();
+</script>

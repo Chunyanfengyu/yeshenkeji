@@ -3,59 +3,58 @@ import BaseLayout from "../layouts/BaseLayout.astro";
 ---
 
 <BaseLayout title="关于我们">
-  <section class="min-h-screen pt-24 pb-16">
-    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
-      <h1 class="text-4xl sm:text-5xl font-bold text-white mb-8">关于夜深科技</h1>
+  <section class="py-16 sm:py-24">
+    <div class="max-w-[1080px] mx-auto px-6 sm:px-12">
+      <div class="section-border pb-8 mb-8">
+        <h1 class="text-3xl font-bold text-white mb-2">// 关于夜深科技</h1>
+      </div>
 
-      <div class="glass rounded-xl p-8 space-y-6">
-        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 text-sm">
-          <div>
-            <span class="text-gray-500 block">公司名称</span>
-            <span class="text-white font-medium">河北省夜深科技有限责任公司</span>
-          </div>
-          <div>
-            <span class="text-gray-500 block">成立时间</span>
-            <span class="text-white font-medium">2026 年</span>
-          </div>
-
+      <div class="grid grid-cols-1 sm:grid-cols-2 gap-px bg-white/10 border border-white/10 mb-12">
+        <div class="bg-midnight p-6">
+          <span class="font-mono text-xs text-gray-500 block mb-1">公司名称</span>
+          <span class="text-white font-medium">河北省夜深科技有限责任公司</span>
+        </div>
+        <div class="bg-midnight p-6">
+          <span class="font-mono text-xs text-gray-500 block mb-1">成立时间</span>
+          <span class="text-white font-medium">2026 年</span>
         </div>
       </div>
 
-      <div class="mt-12 glass rounded-xl p-8">
-        <h2 class="text-2xl font-bold text-white mb-4">品牌宣言</h2>
-        <div class="space-y-4 text-gray-400 leading-relaxed">
-          <p>
-            深夜，是创造力的原点。当世界安静下来，代码的脉搏格外清晰。
-          </p>
-          <p>
-            夜深科技诞生于 2026 年的河北唐山。我们相信，最好的技术产品往往诞生于
-            那些不被打扰的深夜时刻——专注、冷静、充满力量。
-          </p>
-          <p>
-            我们不是一家追逐风口的公司。我们深耕底层技术，从 AI 模型、机器人控制到
-            数字创意工具，每一个产品都力求简洁、健壮、经得起推敲。
-          </p>
-          <p class="text-neon-purple font-semibold text-lg">
-            "深夜不问东西，代码即是答案。"
-          </p>
-        </div>
+      <div class="section-border pb-8 mb-8">
+        <h2 class="text-2xl font-bold text-white mb-2">// 品牌宣言</h2>
       </div>
 
-      <div class="mt-12 glass rounded-xl p-8">
-        <h2 class="text-2xl font-bold text-white mb-4">我们的价值观</h2>
-        <div class="grid grid-cols-1 sm:grid-cols-3 gap-6">
-          <div>
-            <h3 class="text-lg font-semibold text-neon-cyan mb-2">极简</h3>
-            <p class="text-sm text-gray-400">复杂的事情简单做，简单的事情极致做。</p>
-          </div>
-          <div>
-            <h3 class="text-lg font-semibold text-neon-purple mb-2">务实</h3>
-            <p class="text-sm text-gray-400">不画饼，不浮夸，代码和产品说明一切。</p>
-          </div>
-          <div>
-            <h3 class="text-lg font-semibold text-neon-cyan mb-2">深度</h3>
-            <p class="text-sm text-gray-400">拒绝表层创新，深入技术本质解决问题。</p>
-          </div>
+      <div class="space-y-4 text-gray-400 mb-12 max-w-3xl">
+        <p>深夜，是创造力的原点。当世界安静下来，代码的脉搏格外清晰。</p>
+        <p>
+          夜深科技诞生于 2026 年的河北唐山。我们相信，最好的技术产品往往诞生于
+          那些不被打扰的深夜时刻——专注、冷静、充满力量。
+        </p>
+        <p>
+          我们不是一家追逐风口的公司。我们深耕底层技术，从 AI 模型、机器人控制到
+          数字创意工具，每一个产品都力求简洁、健壮、经得起推敲。
+        </p>
+        <p class="text-neon-purple font-bold text-lg border-l-2 border-neon-purple pl-4">
+          "深夜不问东西，代码即是答案。"
+        </p>
+      </div>
+
+      <div class="section-border pb-8 mb-8">
+        <h2 class="text-2xl font-bold text-white mb-2">// 价值观</h2>
+      </div>
+
+      <div class="grid grid-cols-1 sm:grid-cols-3 gap-px bg-white/10 border border-white/10">
+        <div class="bg-midnight p-6">
+          <h3 class="font-mono text-sm font-bold text-white mb-2">[极简]</h3>
+          <p class="text-gray-400 text-sm">复杂的事情简单做，简单的事情极致做。</p>
+        </div>
+        <div class="bg-midnight p-6">
+          <h3 class="font-mono text-sm font-bold text-white mb-2">[务实]</h3>
+          <p class="text-gray-400 text-sm">不画饼，不浮夸，代码和产品说明一切。</p>
+        </div>
+        <div class="bg-midnight p-6">
+          <h3 class="font-mono text-sm font-bold text-white mb-2">[深度]</h3>
+          <p class="text-gray-400 text-sm">拒绝表层创新，深入技术本质解决问题。</p>
         </div>
       </div>
     </div>

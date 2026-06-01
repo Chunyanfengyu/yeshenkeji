@@ -1,103 +1,211 @@
 ---
 import BaseLayout from "../layouts/BaseLayout.astro";
 
-const plan = {
-  id: "monogatari",
-  name: "物语 AI 角色聊天",
-  price: "9.9",
-  period: "/月",
+const plans = [
+  {
+    id: "monthly",
+    name: "月度套餐",
+    price: "9.9",
+    original: "",
+    discount: "",
+    duration: "1 个月",
+    features: ["不限次数 AI 对话", "自定义角色上传、修改"],
+    popular: false,
+  },
+  {
+    id: "quarterly",
+    name: "季度套餐",
+    price: "25.5",
+    original: "¥29.7",
+    discount: "85折",
+    duration: "3 个月",
+    features: ["不限次数 AI 对话", "自定义角色上传、修改"],
+    popular: true,
+  },
+  {
+    id: "yearly",
+    name: "年度套餐",
+    price: "95.5",
+    original: "¥118.8",
+    discount: "8折",
+    duration: "12 个月",
+    features: ["不限次数 AI 对话", "自定义角色上传、修改"],
+    popular: false,
+  },
+];
+
+const customPlan = {
+  name: "个人定制专享",
+  firstPrice: "164",
+  renewPrice: "114",
+  breakdown: [
+    { label: "服务器月成本", value: "¥99" },
+    { label: "大模型调用成本", value: "¥15" },
+    { label: "人工部署费（一次性）", value: "¥50" },
+  ],
   features: [
-    "不限次数 AI 对话",
-    "自定义角色上传、修改",
+    "独立服务器部署",
+    "专属 AI 角色定制",
+    "微信机器人全功能",
+    "长期记忆 + 主动对话",
+    "MCP 工具集成 + 图片识别",
+    "一对一技术支持",
   ],
 };
 ---
 
 <BaseLayout title="物语 · 付费">
-  <section class="min-h-screen pt-24 pb-16">
-    <div class="max-w-2xl mx-auto px-4 sm:px-6 lg:px-8">
-      <div class="text-center mb-16">
-        <h1 class="text-4xl sm:text-5xl font-bold text-white mb-4">
-          物语 <span class="gradient-text">付费开通</span>
-        </h1>
-        <p class="text-gray-400">
-          AI 角色聊天平台 · 微信支付 · ¥{plan.price}{plan.period}
+  <section class="py-16 sm:py-24">
+    <div class="max-w-[1080px] mx-auto px-6 sm:px-12">
+      <div class="section-border pb-8 mb-8">
+        <h1 class="text-3xl font-bold text-white mb-2">// 物语 · 定价方案</h1>
+        <p class="text-gray-400 text-sm">AI 角色聊天平台 · 微信支付 · 自选套餐</p>
+      </div>
+
+      <div class="border border-neon-purple/30 bg-neon-purple/10 p-4 mb-8">
+        <p class="font-mono text-sm text-white font-bold">
+          支付成功后截图，联系客服微信：<span class="text-neon-cyan">chunyanfengyu</span> 开通
         </p>
       </div>
 
-      <div class="glass rounded-2xl p-8 mb-8">
-        <div class="text-center mb-8">
-          <h2 class="text-2xl font-bold text-white mb-2">{plan.name}</h2>
-          <div class="flex items-baseline justify-center gap-1 mt-3">
-            <span class="text-5xl font-bold text-white">¥{plan.price}</span>
-            <span class="text-gray-500">{plan.period}</span>
+      <div class="border border-neon-purple/30 bg-neon-purple/10 p-4 mb-8">
+        <p class="font-mono text-sm text-white">
+          <span class="text-gray-500">$</span> 扫码付款时务必在备注填写你的<span class="text-neon-cyan font-bold">用户编号</span>
+        </p>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-px bg-white/10 mb-8">
+        {
+          plans.map((plan) => (
+            <div class={`bg-midnight p-6 sm:p-8 flex flex-col ${plan.popular ? "ring-2 ring-neon-purple" : ""}`}>
+              {plan.popular && (
+                <div class="font-mono text-xs text-neon-purple mb-4">[* 最受欢迎]</div>
+              )}
+              <h3 class="text-lg font-bold text-white mb-1">{plan.name}</h3>
+              <p class="font-mono text-xs text-gray-500 mb-4">{plan.duration}</p>
+
+              <div class="flex items-baseline gap-1 mb-1">
+                <span class="text-3xl font-bold text-white font-mono">¥{plan.price}</span>
+              </div>
+              {plan.original && (
+                <div class="flex items-center gap-2 mb-4">
+                  <span class="text-gray-600 text-xs line-through">{plan.original}</span>
+                  <span class="font-mono text-xs text-neon-cyan">{plan.discount}</span>
+                </div>
+              )}
+              {!plan.original && <div class="mb-4" />}
+
+              <ul class="space-y-2 mb-8 flex-1">
+                {plan.features.map((f) => (
+                  <li class="flex items-start gap-2 text-sm text-gray-400">
+                    <span class="font-mono text-gray-500 shrink-0 mt-0.5">[*]</span>
+                    {f}
+                  </li>
+                ))}
+              </ul>
+
+              <button
+                class={`pay-btn w-full py-2.5 px-4 rounded-btn text-sm font-mono font-medium transition-colors duration-200 ${
+                  plan.popular
+                    ? "bg-neon-purple text-white hover:bg-neon-purple/90"
+                    : "border border-neon-purple/50 text-neon-purple hover:bg-neon-purple/10"
+                }`}
+                data-plan={plan.name}
+                data-price={plan.price}
+              >
+                选购 {plan.name}
+              </button>
+            </div>
+          ))
+        }
+      </div>
+
+      <div class="border border-neon-cyan/20 p-6 sm:p-8">
+        <div class="flex flex-col lg:flex-row lg:items-start gap-6 lg:gap-12">
+          <div class="flex-1">
+            <div class="flex items-center gap-3 mb-4">
+              <h3 class="text-xl font-bold text-white">{customPlan.name}</h3>
+              <span class="font-mono text-xs border border-neon-cyan/30 px-2 py-0.5 text-neon-cyan">专属服务</span>
+            </div>
+
+            <div class="grid grid-cols-3 gap-px bg-white/10 mb-4">
+              {customPlan.breakdown.map((item) => (
+                <div class="bg-midnight p-4 text-center">
+                  <div class="text-white font-bold font-mono text-lg">{item.value}</div>
+                  <div class="text-gray-500 text-xs font-mono mt-1">{item.label}</div>
+                </div>
+              ))}
+            </div>
+
+            <div class="flex items-baseline gap-4">
+              <div>
+                <div class="text-gray-500 text-xs font-mono mb-1">首月</div>
+                <div class="text-2xl font-bold text-white font-mono">¥{customPlan.firstPrice}</div>
+              </div>
+              <span class="text-gray-600 font-mono">→</span>
+              <div>
+                <div class="text-gray-500 text-xs font-mono mb-1">次月起每月</div>
+                <div class="text-2xl font-bold text-neon-cyan font-mono">¥{customPlan.renewPrice}</div>
+              </div>
+            </div>
           </div>
-        </div>
 
-        <ul class="space-y-3 mb-8">
-          {plan.features.map((f) => (
-            <li class="flex items-start gap-2 text-sm text-gray-400">
-              <span class="text-neon-cyan shrink-0 mt-0.5">
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>
-                </svg>
-              </span>
-              {f}
-            </li>
-          ))}
-        </ul>
+          <div class="flex-1">
+            <ul class="space-y-2 mb-6">
+              {customPlan.features.map((f) => (
+                <li class="flex items-start gap-2 text-sm text-gray-400">
+                  <span class="font-mono text-gray-500 shrink-0 mt-0.5">[*]</span>
+                  {f}
+                </li>
+              ))}
+            </ul>
 
-        <div class="space-y-4">
-          <div>
-            <label for="user-id-input" class="block text-sm text-gray-400 mb-2">用户编号</label>
-            <input
-              id="user-id-input"
-              type="text"
-              placeholder="请输入你的用户编号作为支付备注"
-              class="w-full bg-white/5 border border-white/10 rounded-lg px-4 py-3 text-white text-sm placeholder-gray-600 focus:outline-none focus:border-neon-purple/50 transition-colors"
-            />
+            <button
+              class="pay-btn w-full py-2.5 px-4 rounded-btn text-sm font-mono font-medium bg-neon-purple text-white hover:bg-neon-purple/90 transition-colors duration-200"
+              data-plan={customPlan.name}
+              data-price={customPlan.firstPrice}
+            >
+              选购 {customPlan.name}
+            </button>
           </div>
-
-          <button
-            id="pay-btn"
-            class="w-full py-3 px-4 rounded-lg text-sm font-medium bg-neon-purple text-white hover:bg-neon-purple/90 shadow-lg shadow-neon-purple/25 transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed"
-          >
-            立即支付 ¥{plan.price}
-          </button>
         </div>
       </div>
 
-      <div class="text-center text-gray-600 text-xs">
-        支付后请联系客服开通：chunfeng@yeshen.tech
-      </div>
     </div>
 
     <div id="pay-modal" class="hidden fixed inset-0 z-[100] flex items-center justify-center bg-black/70 backdrop-blur-sm" onclick="closePayModal(event)">
-      <div class="glass rounded-2xl p-8 max-w-md w-full mx-4 text-center" onclick="event.stopPropagation()">
-        <h3 class="text-xl font-bold text-white mb-2">扫码支付</h3>
-        <p class="text-gray-400 text-sm mb-2">请使用<strong class="text-white">微信</strong>扫描下方二维码</p>
-        <p class="text-neon-cyan text-2xl font-bold mb-6" id="modal-amount">¥9.9</p>
+      <div class="border border-white/10 bg-midnight p-8 max-w-md w-full mx-4 text-center" onclick="event.stopPropagation()">
+        <h3 class="text-xl font-bold text-white mb-2 font-mono" id="modal-title">扫码支付</h3>
+        <p class="text-neon-purple text-4xl font-bold mb-4 font-mono" id="modal-amount"></p>
 
-        <div class="mb-4">
-          <img src="/images/pay-qr.png" alt="微信收款码" class="w-56 h-56 mx-auto rounded-xl border border-white/10"/>
+        <div class="flex justify-center gap-2 mb-6">
+          <button class="pay-method active px-4 py-2 text-sm font-mono border border-neon-purple/50 text-neon-purple rounded-btn" data-method="wechat" onclick="switchPayMethod('wechat')">微信支付</button>
+          <button class="pay-method px-4 py-2 text-sm font-mono border border-white/10 text-gray-500 rounded-btn" data-method="alipay" onclick="switchPayMethod('alipay')">支付宝</button>
+        </div>
+
+        <div id="qr-wechat" class="mb-4">
+          <p class="text-gray-400 text-xs mb-2">请使用微信扫描下方二维码</p>
+          <img src="/images/pay-qr.png" alt="微信收款码" class="w-56 h-56 mx-auto border border-white/10"/>
+        </div>
+
+        <div id="qr-alipay" class="mb-4 hidden">
+          <p class="text-gray-400 text-xs mb-2">请使用支付宝扫描下方二维码</p>
+          <img src="/images/alipay-qr.jpg" alt="支付宝收款码" class="w-56 h-56 mx-auto border border-white/10"/>
         </div>
 
         <div class="text-gray-500 text-xs mb-6 space-y-2">
-          <p>支付 <strong class="text-white">¥9.9</strong></p>
-          <p class="text-neon-purple font-bold">付款时务必在<strong class="text-white">备注</strong>填写:</p>
-          <p class="text-white font-mono text-lg" id="modal-user-id"></p>
-          <p>支付成功后截图联系客服开通</p>
-          <p>邮箱：chunfeng@yeshen.tech</p>
+          <p class="font-mono">支付 <span class="text-white font-bold" id="modal-amount-hint"></span></p>
+          <p class="text-neon-purple font-bold">付款时务必在备注填写你的用户编号</p>
+          <p>支付成功后截图，联系客服微信：<span class="text-white font-bold">chunyanfengyu</span> 开通</p>
         </div>
 
-        <button class="text-sm text-gray-500 hover:text-white transition-colors" onclick="document.getElementById('pay-modal')!.classList.add('hidden')">
-          关闭
+        <button class="text-sm text-gray-500 hover:text-white transition-colors font-mono" onclick="document.getElementById('pay-modal').classList.add('hidden')">
+          [关闭]
         </button>
       </div>
     </div>
 
-    <div id="error-toast" class="hidden fixed bottom-6 left-1/2 -translate-x-1/2 z-[200] bg-red-500/90 text-white text-sm px-6 py-3 rounded-lg shadow-lg">
-      请输入用户编号
+    <div id="error-toast" class="hidden fixed bottom-6 left-1/2 -translate-x-1/2 z-[200] bg-neon-purple text-white text-sm px-6 py-3 font-mono">
     </div>
   </section>
 </BaseLayout>
@@ -110,15 +218,28 @@ const plan = {
     setTimeout(() => toast.classList.add("hidden"), 2000);
   }
 
-  document.getElementById("pay-btn").addEventListener("click", () => {
-    const userId = document.getElementById("user-id-input").value.trim();
-    if (!userId) {
-      showToast("请先输入用户编号");
-      return;
-    }
+  function switchPayMethod(method) {
+    document.getElementById("qr-wechat").classList.toggle("hidden", method !== "wechat");
+    document.getElementById("qr-alipay").classList.toggle("hidden", method !== "alipay");
+    document.querySelectorAll(".pay-method").forEach(function(btn) {
+      var isActive = btn.getAttribute("data-method") === method;
+      btn.classList.toggle("border-neon-purple/50", isActive);
+      btn.classList.toggle("text-neon-purple", isActive);
+      btn.classList.toggle("border-white/10", !isActive);
+      btn.classList.toggle("text-gray-500", !isActive);
+    });
+  }
 
-    document.getElementById("modal-user-id").textContent = userId;
-    document.getElementById("pay-modal").classList.remove("hidden");
+  document.querySelectorAll(".pay-btn").forEach((btn) => {
+    btn.addEventListener("click", () => {
+      const plan = btn.getAttribute("data-plan");
+      const price = btn.getAttribute("data-price");
+      document.getElementById("modal-title").textContent = "扫码支付 · " + plan;
+      document.getElementById("modal-amount").textContent = "¥" + price;
+      document.getElementById("modal-amount-hint").textContent = "¥" + price;
+      switchPayMethod("wechat");
+      document.getElementById("pay-modal").classList.remove("hidden");
+    });
   });
 
   function closePayModal(event) {

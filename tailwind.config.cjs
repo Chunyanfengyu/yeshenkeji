@@ -12,11 +12,19 @@ module.exports = {
         },
       },
       fontFamily: {
-        sans: ["Inter", "Noto Sans SC", "sans-serif"],
-        mono: ["JetBrains Mono", "monospace"],
+        mono: [
+          "IBM Plex Mono",
+          "ui-monospace",
+          "SFMono-Regular",
+          "Menlo",
+          "Monaco",
+          "Consolas",
+          "monospace",
+        ],
       },
-      backdropBlur: {
-        xs: "2px",
+      borderRadius: {
+        btn: "4px",
+        panel: "6px",
       },
     },
   },

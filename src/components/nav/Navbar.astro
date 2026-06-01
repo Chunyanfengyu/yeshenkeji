@@ -4,61 +4,52 @@ import Button from "../ui/Button.astro";
 const navLinks = [
   { href: "/", label: "首页" },
   { href: "/about", label: "关于" },
-  { href: "/solutions", label: "解决方案" },
   { href: "/cases", label: "案例" },
-  { href: "/payment", label: "物语付费" },
-  { href: "/blog", label: "博客" },
+  { href: "/payment", label: "付费" },
   { href: "/contact", label: "联系" },
 ];
 ---
 
-<nav class="fixed top-0 left-0 right-0 z-50 glass">
-  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-    <div class="flex items-center justify-between h-16">
-      <a href="/" class="flex items-center gap-2">
-        <span class="text-xl font-bold gradient-text font-sans">夜深科技</span>
-        <span class="text-xs text-gray-500 font-mono hidden sm:inline">Noctis Tech</span>
-      </a>
+<nav class="sticky top-0 z-50 bg-midnight/95 backdrop-blur-sm border-b border-white/10">
+  <div class="max-w-[1080px] mx-auto px-6 sm:px-12 h-16 flex items-center justify-between">
+    <a href="/" class="flex items-center gap-2">
+      <span class="font-mono font-bold text-lg text-white tracking-wider">YESHEN</span>
+    </a>
 
-      <div class="hidden md:flex items-center gap-6">
-        {
-          navLinks.map((link) => (
-            <a
-              href={link.href}
-              class="text-sm text-gray-400 hover:text-white transition-colors font-medium"
-            >
-              {link.label}
-            </a>
-          ))
-        }
-        <Button variant="primary" size="sm" href="/contact">开启合作</Button>
-      </div>
-
-      <button
-        id="menu-toggle"
-        class="md:hidden text-gray-300 hover:text-white p-2"
-        aria-label="打开菜单"
-      >
-        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
-        </svg>
-      </button>
-    </div>
-  </div>
-
-  <div id="mobile-menu" class="hidden md:hidden glass border-t border-white/10">
-    <div class="px-4 py-4 space-y-3">
+    <div class="hidden md:flex items-center gap-8">
       {
         navLinks.map((link) => (
           <a
             href={link.href}
-            class="block text-sm text-gray-400 hover:text-white transition-colors py-2"
+            class="font-mono text-sm text-gray-400 hover:text-white transition-colors"
           >
             {link.label}
           </a>
         ))
       }
-      <Button variant="primary" size="sm" href="/contact" class="w-full">开启合作</Button>
+    </div>
+
+    <button
+      id="menu-toggle"
+      class="md:hidden text-gray-400 hover:text-white p-2 font-mono text-sm"
+      aria-label="菜单"
+    >
+      [菜单]
+    </button>
+  </div>
+
+  <div id="mobile-menu" class="hidden md:hidden border-t border-white/10 bg-midnight">
+    <div class="px-6 py-4 space-y-3">
+      {
+        navLinks.map((link) => (
+          <a
+            href={link.href}
+            class="block font-mono text-sm text-gray-400 hover:text-white transition-colors py-2"
+          >
+            {link.label}
+          </a>
+        ))
+      }
     </div>
   </div>
 </nav>

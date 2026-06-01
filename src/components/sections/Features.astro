@@ -1,59 +1,49 @@
 ---
-import Card from "../ui/Card.astro";
-
 const features = [
   {
-    icon: "🤖",
     title: "AI 软件开发",
     description: "基于大模型与深度学习的智能系统开发，从 NLP 到计算机视觉，提供企业级 AI 解决方案。",
     href: "/solutions/ai-software",
-    tags: ["Python", "PyTorch", "LLM"],
-    stats: [
-      { label: "项目组", value: "1" },
-      { label: "技术栈", value: "6+" },
-    ],
+    items: ["Python", "PyTorch", "LLM", "NLP"],
   },
-{
-    icon: "🎨",
+  {
     title: "数字创意",
     description: "沉浸式交互体验、实时渲染与数字孪生，用技术赋能创意表达。",
     href: "/solutions/digital-creative",
-    tags: ["WebGL", "Unity", "3D"],
-    stats: [
-      { label: "项目组", value: "1" },
-      { label: "技术栈", value: "4+" },
-    ],
+    items: ["WebGL", "Unity", "3D", "前端"],
   },
   {
-    icon: "🔬",
     title: "技术咨询",
     description: "为初创企业与传统企业提供技术架构评估、AI 落地路径规划与团队培训服务。",
     href: "/contact",
-    tags: ["架构", "AI转型", "培训"],
-    stats: [
-      { label: "服务能力", value: "全栈" },
-      { label: "响应", value: "24h" },
-    ],
+    items: ["架构评估", "AI转型", "团队培训", "24h响应"],
   },
 ];
 ---
 
-<section class="py-24 bg-deepgray/50">
-  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-    <h2 class="text-3xl sm:text-4xl font-bold text-white text-center mb-4">核心业务</h2>
-    <p class="text-gray-500 text-center mb-12 max-w-xl mx-auto">
-      四项主营业务，覆盖 AI 时代的技术需求
-    </p>
-    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-      {features.map((f) => (
-        <Card
-          title={f.title}
-          description={f.description}
-          icon={f.icon}
-          href={f.href}
-          tags={f.tags}
-          stats={f.stats}
-        />
+<section class="py-16 sm:py-24 bg-deepgray/50">
+  <div class="max-w-[1080px] mx-auto px-6 sm:px-12">
+    <div class="section-border pb-8 mb-8">
+      <h2 class="text-2xl font-bold text-white mb-2">// 核心业务</h2>
+      <p class="text-gray-400 text-sm">四项主营业务，覆盖 AI 时代的技术需求</p>
+    </div>
+
+    <div class="space-y-0">
+      {features.map((f, i) => (
+        <a href={f.href} class="block group section-border pb-8 mb-8">
+          <div class="flex items-start gap-4">
+            <span class="font-mono text-gray-500 text-sm mt-1">[{String(i + 1).padStart(2, "0")}]</span>
+            <div class="flex-1">
+              <h3 class="text-lg font-bold text-white mb-2 group-hover:text-neon-purple transition-colors">{f.title}</h3>
+              <p class="text-gray-400 text-sm mb-3">{f.description}</p>
+              <div class="flex flex-wrap gap-2">
+                {f.items.map((item) => (
+                  <span class="font-mono text-xs text-gray-500 border border-white/10 px-2 py-0.5">{item}</span>
+                ))}
+              </div>
+            </div>
+          </div>
+        </a>
       ))}
     </div>
   </div>
