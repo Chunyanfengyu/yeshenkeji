@@ -167,6 +167,13 @@ import Button from "../ui/Button.astro";
 
     if (!valid) return;
 
+    // 6. Referrer 校验：只允许从本站提交
+    if (window.location.hostname !== "yeshen.tech" && window.location.hostname !== "localhost") {
+      console.warn("[Security] invalid referrer");
+      showError("message", "提交失败：来源不合法");
+      return;
+    }
+
     // 提交
     var data = {
       access_key: "09be2886-6653-4d51-8581-c31600a0f39f",

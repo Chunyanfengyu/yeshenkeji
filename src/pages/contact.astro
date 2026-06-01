@@ -19,7 +19,7 @@ import ContactForm from "../components/sections/ContactForm.astro";
         <h2 class="font-mono text-sm font-bold text-white mb-4">[联系信息]</h2>
         <div class="space-y-2 text-sm text-gray-400">
           <p class="font-mono"><span class="text-gray-500">地址:</span> 河北省唐山市路北区龙仁里清科园</p>
-          <p class="font-mono"><span class="text-gray-500">邮箱:</span> chunfeng@yeshen.tech</p>
+          <p class="font-mono"><span class="text-gray-500">邮箱:</span> <span id="email-obfuscate" class="cursor-pointer" onclick="this.textContent=atob('Y2h1bmZlbmcmeWVzaGVuLnRlY2g=').replace('&','@')">[点击显示]</span></p>
           <p class="font-mono"><span class="text-gray-500">工作时间:</span> 周一至周五 9:00 - 18:00</p>
         </div>
       </div>

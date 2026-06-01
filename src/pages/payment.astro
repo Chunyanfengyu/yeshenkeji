@@ -64,7 +64,7 @@ const customPlan = {
 
       <div class="border border-neon-purple/30 bg-neon-purple/10 p-4 mb-8">
         <p class="font-mono text-sm text-white font-bold">
-          支付成功后截图，联系客服微信：<span class="text-neon-cyan">chunyanfengyu</span> 开通
+          支付成功后截图，<span id="contact-hint" class="text-neon-cyan cursor-pointer" onclick="showWechatId()">[点击显示客服微信]</span> 开通
         </p>
       </div>
 
@@ -185,18 +185,18 @@ const customPlan = {
 
         <div id="qr-wechat" class="mb-4">
           <p class="text-gray-400 text-xs mb-2">请使用微信扫描下方二维码</p>
-          <img src="/images/pay-qr.png" alt="微信收款码" class="w-56 h-56 mx-auto border border-white/10"/>
+          <img src="/images/qr_a7f3e2b9.png" alt="微信收款码" class="w-56 h-56 mx-auto border border-white/10"/>
         </div>
 
         <div id="qr-alipay" class="mb-4 hidden">
           <p class="text-gray-400 text-xs mb-2">请使用支付宝扫描下方二维码</p>
-          <img src="/images/alipay-qr.jpg" alt="支付宝收款码" class="w-56 h-56 mx-auto border border-white/10"/>
+          <img src="/images/qr_c4d8f1a3.jpg" alt="支付宝收款码" class="w-56 h-56 mx-auto border border-white/10"/>
         </div>
 
         <div class="text-gray-500 text-xs mb-6 space-y-2">
           <p class="font-mono">支付 <span class="text-white font-bold" id="modal-amount-hint"></span></p>
           <p class="text-neon-purple font-bold">付款时务必在备注填写你的用户编号</p>
-          <p>支付成功后截图，联系客服微信：<span class="text-white font-bold">chunyanfengyu</span> 开通</p>
+          <p>支付成功后截图，<span id="modal-contact-hint" class="text-white font-bold cursor-pointer" onclick="showWechatId()">[点击显示客服微信]</span> 开通</p>
         </div>
 
         <button class="text-sm text-gray-500 hover:text-white transition-colors font-mono" onclick="document.getElementById('pay-modal').classList.add('hidden')">
@@ -246,5 +246,11 @@ const customPlan = {
     if (event.target === event.currentTarget || event.target.id === "pay-modal") {
       document.getElementById("pay-modal").classList.add("hidden");
     }
+  }
+
+  function showWechatId() {
+    var id = "chun" + "yanfeng" + "yu";
+    document.getElementById("contact-hint").innerHTML = id;
+    document.getElementById("modal-contact-hint").innerHTML = id;
   }
 </script>

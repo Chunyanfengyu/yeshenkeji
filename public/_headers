@@ -1,0 +1,11 @@
+# Security headers - applied to all routes
+/*
+  X-Frame-Options: DENY
+  X-Content-Type-Options: nosniff
+  Referrer-Policy: strict-origin-when-cross-origin
+  Permissions-Policy: camera=(), microphone=(), geolocation=()
+
+# Hotlink protection for images
+/images/*
+  Access-Control-Allow-Origin: https://yeshen.tech
+  Cache-Control: private, no-cache
