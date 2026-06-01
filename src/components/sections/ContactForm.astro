@@ -167,24 +167,14 @@ import Button from "../ui/Button.astro";
 
     if (!valid) return;
 
-    // 6. Referrer 校验：只允许从本站提交
-    if (window.location.hostname !== "yeshen.tech" && window.location.hostname !== "localhost") {
-      console.warn("[Security] invalid referrer");
-      showError("message", "提交失败：来源不合法");
-      return;
-    }
-
     // 提交
     var data = {
-      access_key: "09be2886-6653-4d51-8581-c31600a0f39f",
       name: name,
       email: email,
       message: message,
-      subject: "夜深科技 - 新的联系表单提交",
-      from_name: "夜深科技官网",
     };
 
-    fetch("https://api.web3forms.com/submit", {
+    fetch("/api/submit", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(data),

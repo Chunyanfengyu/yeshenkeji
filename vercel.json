@@ -8,6 +8,10 @@
       "source": "/(.*)",
       "headers": [
         {
+          "key": "Access-Control-Allow-Origin",
+          "value": "https://yeshen.tech"
+        },
+        {
           "key": "X-Frame-Options",
           "value": "DENY"
         },
