@@ -1,0 +1,56 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+
+const allArticles = [
+  {
+    title: "AI 如何重塑人类的情感生活",
+    date: "2026-06-01",
+    section: "行业观察",
+    author: "春风 @夜深科技",
+    summary: "从 AI 陪伴到亲密关系重构，探讨人工智能对人类情感生活的深层影响。",
+    href: "/blog/ai-emotional-life",
+    tags: ["AI", "情感", "社会"],
+  },
+];
+
+const techArticles = allArticles.filter((a) => a.section === "技术博客");
+---
+
+<BaseLayout title="技术博客">
+  <section class="py-16 sm:py-24">
+    <div class="max-w-[1080px] mx-auto px-6 sm:px-12">
+      <div class="section-border pb-8 mb-8">
+        <a href="/blog" class="font-mono text-xs text-gray-500 hover:text-neon-purple transition-colors">&larr; 返回社区文章</a>
+        <h1 class="text-3xl font-bold text-white mt-4 mb-2">// 技术博客</h1>
+        <p class="text-gray-400 text-sm">AI、开发、架构等技术领域的深度文章</p>
+      </div>
+
+      {techArticles.length === 0 ? (
+        <p class="text-gray-500 text-sm font-mono">[*] 暂无技术博客文章，敬请期待。</p>
+      ) : (
+        <div class="space-y-0">
+          {techArticles.map((article) => (
+            <a href={article.href} class="block section-border pb-8 mb-8 group">
+              <div class="flex items-start gap-4">
+                <span class="font-mono text-gray-500 text-sm mt-1">{article.date}</span>
+                <div class="flex-1">
+                  <div class="flex items-center gap-2 mb-1">
+                    <span class="font-mono text-xs text-neon-purple border border-neon-purple/30 px-2 py-0.5">{article.section}</span>
+                    <span class="font-mono text-xs text-gray-500">{article.author}</span>
+                  </div>
+                  <h3 class="text-lg font-bold text-white mb-2 group-hover:text-neon-purple transition-colors">{article.title}</h3>
+                  <p class="text-gray-400 text-sm mb-3">{article.summary}</p>
+                  <div class="flex flex-wrap gap-2">
+                    {article.tags.map((tag) => (
+                      <span class="font-mono text-xs text-gray-500 border border-white/10 px-2 py-0.5">{tag}</span>
+                    ))}
+                  </div>
+                </div>
+              </div>
+            </a>
+          ))}
+        </div>
+      )}
+    </div>
+  </section>
+</BaseLayout>
